@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{550E3F99-7EEA-401E-AAED-7BC4AC2DCD67}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Holo</RootNamespace>
+    <AssemblyName>Holo</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.11.25.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>packages\HtmlAgilityPack.1.11.25\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="libvideo">
+      <HintPath>.\libvideo.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=8df3f1eee85cc956, processorArchitecture=MSIL">
+      <HintPath>packages\NetFx.Extensions.DependencyInjection.2.2.0\lib\net40\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=8df3f1eee85cc956, processorArchitecture=MSIL">
+      <HintPath>packages\NetFx.Extensions.DependencyInjection.Abstractions.2.2.0\lib\net40\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=8df3f1eee85cc956, processorArchitecture=MSIL">
+      <HintPath>packages\NetFx.Extensions.Logging.Abstractions.2.2.0\lib\net40\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Drawing">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression">
+      <HintPath>.\System.IO.Compression.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\System.IO.Compression.ZipFile.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.CSharp">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="VkNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\VkNet.1.57.0\lib\net45\VkNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="YouTubeSearch">
+      <HintPath>.\YouTubeSearch.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="SIGame\Enums\PackType.cs" />
+    <Compile Include="Systems\CacheSystem.cs" />
+    <Compile Include="Utility.cs" />
+    <Compile Include="VkUser.cs" />
+    <Compile Include="Websites\Website_Coub\Structs\Coub.cs" />
+    <Compile Include="Websites\Website_Coub\Structs\Container.cs" />
+    <Compile Include="Websites\Website_Coub\Structs\File.cs" />
+    <Compile Include="Websites\Website_Coub\Main_Coub.cs" />
+    <Compile Include="Websites\Website_Coub\Structs\Tag.cs" />
+    <Compile Include="Websites\Website_Coub\Structs\Video.cs" />
+    <Compile Include="Websites\Website_Coub\Structs\Versions.cs" />
+    <Compile Include="Systems\ErrorsSystem.cs" />
+    <Compile Include="FFMpeg.cs" />
+    <Compile Include="Output.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Websites\Website_Shikimori\Enums\Status.cs" />
+    <Compile Include="Websites\Website_Shikimori\Main_Shikimori.cs" />
+    <Compile Include="Websites\Website_Shikimori\Shikimori.cs" />
+    <Compile Include="Websites\Website_Shikimori\Structs\Anime.cs" />
+    <Compile Include="Websites\Website_Shikimori\Structs\AnimePerson.cs" />
+    <Compile Include="Websites\Website_Shikimori\Structs\Character.cs" />
+    <Compile Include="Websites\Website_Shikimori\Structs\Genre.cs" />
+    <Compile Include="Websites\Website_Shikimori\Structs\Images\Image.cs" />
+    <Compile Include="Websites\Website_Shikimori\Structs\Images\Screenshot.cs" />
+    <Compile Include="Websites\Website_Shikimori\Structs\Images\CharacterImage.cs" />
+    <Compile Include="Websites\Website_Shikimori\Structs\Images\UserImage.cs" />
+    <Compile Include="Websites\Website_Shikimori\Structs\ProfileInfo.cs" />
+    <Compile Include="Websites\Website_Shikimori\Structs\Rating.cs" />
+    <Compile Include="Websites\Website_Shikimori\Structs\Studio.cs" />
+    <Compile Include="Websites\Website_Shikimori\Structs\User.cs" />
+    <Compile Include="Websites\Website_Shikimori\Structs\UserAnime.cs" />
+    <Compile Include="Websites\Website_Shikimori\Structs\Video.cs" />
+    <Compile Include="Websites\Website_Shikimori\Structs\WatchStatus.cs" />
+    <Compile Include="SIGame\Elements\SIG_final.cs" />
+    <Compile Include="SIGame\Elements\SIG_question.cs" />
+    <Compile Include="SIGame\Elements\SIG_round.cs" />
+    <Compile Include="SIGame\Elements\SIG_theme.cs" />
+    <Compile Include="SIGame\Elements\Theme.cs" />
+    <Compile Include="SIGame\SIGamePack.cs" />
+    <Compile Include="SIGame\Themes\Theme_AnimeByAnagramm.cs" />
+    <Compile Include="SIGame\Themes\Theme_AnimeByCoub.cs" />
+    <Compile Include="SIGame\Themes\Theme_AnimeByDescription.cs" />
+    <Compile Include="SIGame\Themes\Theme_AnimeByDisappearance.cs" />
+    <Compile Include="SIGame\Themes\Theme_AnimeByEnding.cs" />
+    <Compile Include="SIGame\Themes\Theme_AnimeByJapanese.cs" />
+    <Compile Include="SIGame\Themes\Theme_AnimeByOpening.cs" />
+    <Compile Include="SIGame\Themes\Theme_AnimeByOst.cs" />
+    <Compile Include="SIGame\Themes\Theme_AnimeByPoster.cs" />
+    <Compile Include="SIGame\Themes\Theme_AnimeByScreenshot.cs" />
+    <Compile Include="SIGame\Themes\Theme_CharacterByDescription.cs" />
+    <Compile Include="SIGame\Themes\Theme_CharacterByImage.cs" />
+    <Compile Include="SIGame\Themes\Theme_CharacterByJapanese.cs" />
+    <Compile Include="SIGame\Themes\Theme_YearOfAnime.cs" />
+    <Compile Include="Vk.cs" />
+    <Compile Include="Web.cs" />
+    <Compile Include="Websites\Website_Youtube\Main_Youtube.cs" />
+    <Compile Include="Zip\LocalAppContext.cs" />
+    <Compile Include="Zip\LocalAppContextSwitches.cs" />
+    <Compile Include="Zip\ZipFile.cs" />
+    <Compile Include="Zip\ZipFileExtensionscs.cs" />
+    <Compile Include="Config.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\pack_logo.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
