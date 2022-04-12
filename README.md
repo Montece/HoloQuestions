@@ -1,6 +1,6 @@
 # Holo
 Holo - бот для создания SiGame паков.
-SiGame: @VladimirKhil/SI
+SiGame: https://github.com/VladimirKhil/SI
 
 Бот позволяет создавать паки по аниме на основе shikimori api.
 
