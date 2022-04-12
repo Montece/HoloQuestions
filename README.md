@@ -1,4 +1,5 @@
 # Holo
+![Preview](preview.png "Preview")
 Holo - бот для создания SiGame паков.
 SiGame: https://github.com/VladimirKhil/SI
 
