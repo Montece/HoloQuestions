@@ -1,4 +1,4 @@
-# Holo
+# HoloQuestions
 ![Preview](preview.jpg "Preview")
 Holo - бот для создания SiGame паков.
 SiGame: https://github.com/VladimirKhil/SI
