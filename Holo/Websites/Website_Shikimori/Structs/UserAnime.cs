@@ -3,7 +3,7 @@ using System;
 
 namespace Holo.Websites.Website_Shikimori.Structs
 {
-    [Serializable]
+    [JsonObject(MemberSerialization = MemberSerialization.OptIn)]
     public class UserAnime
     {
         [JsonProperty("id")]

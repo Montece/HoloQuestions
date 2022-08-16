@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace Holo.Websites.Website_Shikimori.Structs
 {
@@ -74,5 +75,7 @@ namespace Holo.Websites.Website_Shikimori.Structs
         public AnimePerson[] Persons { get; set; }
         public Screenshot[] Screenshots { get; set; }
         public string UserOwner { get; set; }
+        public List<AnimeMusic> OPs { get; set; }
+        public List<AnimeMusic> EDs { get; set; }
     }
 }

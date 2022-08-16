@@ -10,7 +10,7 @@ namespace Holo.Themes
         public override void FillQuestion(SIG_question question, Shikimori shiki, string filename_)
         {
             AnimePerson person = shiki.GetCharacterByImage();
-            question.MediaUrl = Main_Shikimori.URL_ + person.Character.Image.Preview;
+            question.MediaUrl = Main_Shikimori.URL + person.Character.Image.Preview;
             question.MediaPath = Web.GetFilename($"./{filename_}/Images/", ".jpg", out string filename);
             question.MediaFilename = filename;
             question.Answer = $"{person.Character.Russian} ({person.Anime.Russian})";

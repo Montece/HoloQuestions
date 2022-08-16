@@ -4,17 +4,19 @@ namespace Holo
 {
     public static class Output
     {
-        public static void Print(object text, ConsoleColor color = ConsoleColor.Green)
+        private const ConsoleColor DefaultColor = ConsoleColor.Gray;
+
+        public static void Print(object text, ConsoleColor color = DefaultColor)
         {
             Console.ForegroundColor = color;
             Console.Write($"[{DateTime.Now.ToShortDateString()} {DateTime.Now.ToShortTimeString()}] ");
             Console.WriteLine($"{text}");
+            Console.ForegroundColor = DefaultColor;
         }
 
-        public static void Error(Exception text)
+        public static void Error(string title, Exception exception)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"[{DateTime.Now.ToShortTimeString()}]: {text.ToString()}");
+            Print($"{title} {exception.Message} {exception.StackTrace}", ConsoleColor.Red);
         }
     }
 }

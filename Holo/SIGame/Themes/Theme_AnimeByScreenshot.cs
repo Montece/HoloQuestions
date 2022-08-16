@@ -15,7 +15,7 @@ namespace Holo.Themes
             Anime anime = shiki.GetAnimeByScreenshot();
             Screenshot screenshot = anime.Screenshots[rand.Next(0, anime.Screenshots.Length)];
  
-            question.MediaUrl = Main_Shikimori.URL_ + screenshot.Preview;
+            question.MediaUrl = Main_Shikimori.URL + screenshot.Preview;
             question.MediaPath = Web.GetFilename($"./{filename_}/Images/", ".jpg", out string filename);
             question.MediaFilename = filename;
             question.Answer = $"{anime.Russian}";

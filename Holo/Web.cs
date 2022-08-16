@@ -16,17 +16,33 @@ namespace Holo
         public static int AttemptsDelay = 12000;
         public static int StandartDelay = 400;
 
-        static readonly HttpClient httpClient = new HttpClient();
-        static readonly WebClient webClient = new WebClient();
-        static readonly Random rand = new Random();
+        private static readonly HttpClient httpClient = new HttpClient();
+        private static readonly WebClient webClient = new WebClient();
 
         private static long currentFile = 0;
 
-        public static string GetRequest(string address)
+        public static string GetRequest(string address, CacheInfo cacheInfo = null)
         {
-            string answer = GetRequest(new Uri(address));
-            Thread.Sleep(StandartDelay);
-            return answer;
+            if (cacheInfo == null)
+            {
+                string answer = GetRequest(new Uri(address));
+                Thread.Sleep(StandartDelay);
+                return answer;
+            }
+            else
+            {
+                if (CacheSystem.Check(cacheInfo))
+                {
+                    return CacheSystem.Get(cacheInfo);
+                }
+                else
+                {
+                    string answer = GetRequest(new Uri(address));
+                    CacheSystem.Cache(cacheInfo, answer);
+                    Thread.Sleep(StandartDelay);
+                    return answer;
+                }
+            }
         }
 
         private static string GetRequest(Uri uri, int attempt = 0)

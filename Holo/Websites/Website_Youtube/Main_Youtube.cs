@@ -8,7 +8,7 @@ namespace Holo.Websites.Website_Youtube
     public static class Main_Youtube
     {
         private const int PAGES = 3;
-        private static VideoSearch search = new VideoSearch();
+        private static readonly VideoSearch search = new VideoSearch();
 
         public static VideoSearchComponents Search(string query)
         {

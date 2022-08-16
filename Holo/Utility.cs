@@ -12,6 +12,7 @@ namespace Holo
     public static class Utility
     {
         private const int BLUR_SIZE = 8;
+        private static readonly Random random = new Random(Guid.NewGuid().GetHashCode());
 
         public static void BlurImage(string path)
         {
@@ -99,6 +100,12 @@ namespace Holo
             blurred.UnlockBits(blurredData);
 
             return blurred;
+        }
+
+        public static T GetRandomElement<T>(this List<T> list)
+        {
+            if (list.Count.Equals(0)) return default(T);
+            return list[random.Next(0, list.Count)];
         }
     }
 }

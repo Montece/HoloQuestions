@@ -1,5 +1,4 @@
-﻿using Holo.Systems;
-using Holo.Websites.Website_Shikimori.Structs;
+﻿using Holo.Websites.Website_Shikimori.Structs;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -9,18 +8,17 @@ namespace Holo.Websites.Website_Shikimori
 {
     public static class Main_Shikimori
     {
-        public const string URL_ = "https://shikimori.one/";
-        private const string URL = "https://shikimori.one/api/";
+        public const string URL = "https://shikimori.one/";
+        private const string API_URL = URL + "api";
 
         public const Status CurrentAnimeStatus = Status.completed;
         public const bool UseSecondaryCharacers = true;
-        private static readonly Random rand = new Random();
 
         public static bool UserExists(string id)
         {
-            string request = $"users/{id}";
+            string request = $"{API_URL}/users/{id}";
 
-            string answer = Web.GetRequest(URL + request);
+            string answer = Web.GetRequest(request);
             ProfileInfo info;
 
             try
@@ -32,35 +30,25 @@ namespace Holo.Websites.Website_Shikimori
                 return false;
             }
             
-            bool no_errors = info.ErrorID == 0;
+            bool no_errors = info.ErrorID.Equals(0);
             return no_errors;
         }
 
-        public static UserAnime[] GetUserAnimeList(string username, Status animeStatus)
+        public static List<UserAnime> GetUserAnimeList(string username, Status animeStatus, int limit = 5000)
         {
-            string request = $"users/{username}/anime_rates?limit=5000&status={animeStatus.ToString()}";
+            string request = $"{API_URL}/users/{username}/anime_rates?limit={limit}&status={animeStatus}";
 
-            string answer = "";
-            if (!CacheSystem.Check("animelist", username, ref answer))
-            {
-                answer = Web.GetRequest(URL + request);
-                CacheSystem.Cache("animelist", username, answer);
-            }
+            string answer = Web.GetRequest(request);
 
-            UserAnime[] animeList = JsonConvert.DeserializeObject<UserAnime[]>(answer);
+            List<UserAnime> animeList = JsonConvert.DeserializeObject<List<UserAnime>>(answer);
             return animeList;
         }
 
         public static Anime GetAnimeInformation(UserAnime animeList)
         {
-            string request = $"animes/{animeList.Anime.ID}";
+            string request = $"{API_URL}/animes/{animeList.Anime.ID}";
 
-            string answer = "";
-            if (!CacheSystem.Check("animeinfo", animeList.Anime.ID.ToString(), ref answer))
-            {
-                answer = Web.GetRequest(URL + request);
-                CacheSystem.Cache("animeinfo", animeList.Anime.ID.ToString(), answer);
-            }
+            string answer = Web.GetRequest(request, new CacheInfo("animeinfo", animeList.Anime.ID.ToString()));
 
             Anime anime = JsonConvert.DeserializeObject<Anime>(answer);
             return anime;        
@@ -68,42 +56,27 @@ namespace Holo.Websites.Website_Shikimori
 
         public static void GetAnimeScreenshots(Anime anime)
         {
-            string request = $"animes/{anime.ID}/screenshots";
+            string request = $"{API_URL}/animes/{anime.ID}/screenshots";
 
-            string answer = "";
-            if (!CacheSystem.Check("animescreen", anime.ID.ToString(), ref answer))
-            {
-                answer = Web.GetRequest(URL + request);
-                CacheSystem.Cache("animescreen", anime.ID.ToString(), answer);
-            }
+            string answer = Web.GetRequest(request, new CacheInfo("animescreen", anime.ID.ToString()));
 
             anime.Screenshots = JsonConvert.DeserializeObject<Screenshot[]>(answer);
         }
 
         public static AnimePerson[] GetAnimeCharacters(int animeID)
         {
-            string request = $"animes/{animeID}/roles";
+            string request = $"{API_URL}/animes/{animeID}/roles";
 
-            string answer = "";
-            if (!CacheSystem.Check("animepersons", animeID.ToString(), ref answer))
-            {
-                answer = Web.GetRequest(URL + request);
-                CacheSystem.Cache("animepersons", animeID.ToString(), answer);
-            }
+            string answer = Web.GetRequest(request, new CacheInfo("animepersons", animeID.ToString()));
 
             return JsonConvert.DeserializeObject<AnimePerson[]>(answer);
         }
 
         public static Character GetAnimeCharacterInformation(Character character)
         {
-            string request = $"characters/{character.ID}";
+            string request = $"{API_URL}/characters/{character.ID}";
 
-            string answer = "";
-            if (!CacheSystem.Check("characterinfo", character.ID.ToString(), ref answer))
-            {
-                answer = Web.GetRequest(URL + request);
-                CacheSystem.Cache("characterinfo", character.ID.ToString(), answer);
-            }
+            string answer = Web.GetRequest(request, new CacheInfo("characterinfo", character.ID.ToString()));
 
             character = JsonConvert.DeserializeObject<Character>(answer);
             return character;

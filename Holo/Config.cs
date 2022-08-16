@@ -1,5 +1,4 @@
-﻿using Holo.Sytems;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.IO;
 
@@ -90,7 +89,7 @@ namespace Holo
             }
             catch (Exception x)
             {
-                ErrorsSystem.Call("Ошибка загрузки конфига!", x);
+                Output.Error("Ошибка загрузки конфига!", x);
             }
 
             if (CurrentConfig == null) Save();
@@ -108,7 +107,7 @@ namespace Holo
             }
             catch (Exception x)
             {
-                ErrorsSystem.Call("Ошибка загрузки конфига!", x);
+                Output.Error("Ошибка загрузки конфига!", x);
             }
         }
 
@@ -121,7 +120,7 @@ namespace Holo
             }
             catch (Exception x)
             {
-                ErrorsSystem.Call("Ошибка загрузки конфига!", x);
+                Output.Error("Ошибка загрузки конфига!", x);
                 return "error";
             }
         }

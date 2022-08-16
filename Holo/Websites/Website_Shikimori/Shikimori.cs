@@ -1,4 +1,5 @@
 ﻿using Holo.Websites.Website_Shikimori.Structs;
+using Holo.Websites.Website_Themes_Moe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,161 +8,213 @@ namespace Holo.Websites.Website_Shikimori
 {
     public class Shikimori
     {
-        public List<string> ShikimoriUsers = new List<string>();
+        private readonly List<string> ShikimoriUsers = new List<string>();
 
-        public List<AnimePerson> Persons = new List<AnimePerson>();
-        public List<Anime> Animes = new List<Anime>(); //Ost End Op Coub JapCharact DescrCharact
+        private readonly List<AnimePerson> AllPersons = new List<AnimePerson>();
+        private readonly List<Anime> AllAnimes = new List<Anime>();
+        private readonly CategotyList<Anime> YearOfAnime = new CategotyList<Anime>();
+        private readonly CategotyList<Anime> FillAnimeByPoster = new CategotyList<Anime>();
+        private readonly CategotyList<Anime> FillAnimeByScreenshot = new CategotyList<Anime>();
+        private readonly CategotyList<Anime> FillAnimeByJapane = new CategotyList<Anime>();
+        private readonly CategotyList<Anime> FillAnimeByDisappearance = new CategotyList<Anime>();
+        private readonly CategotyList<Anime> FillAnimeByDescription = new CategotyList<Anime>();
+        private readonly CategotyList<Anime> FillAnimeByAnagramm = new CategotyList<Anime>();
+        private readonly CategotyList<Anime> FillAnimeByCoub = new CategotyList<Anime>();
+        private readonly CategotyList<Anime> FillAnimeByOpening = new CategotyList<Anime>();
+        private readonly CategotyList<Anime> FillAnimeByEnding = new CategotyList<Anime>();
+        private readonly CategotyList<AnimePerson> FillCharacterByImage = new CategotyList<AnimePerson>();
+        private readonly CategotyList<AnimePerson> FillCharacterByJapanese = new CategotyList<AnimePerson>();
+        private readonly CategotyList<AnimePerson> FillCharacterByDescription = new CategotyList<AnimePerson>();
 
-        public List<Anime> YearOfAnime = new List<Anime>();
-        public List<Anime> FillAnimeByPoster = new List<Anime>();
-        public List<Anime> FillAnimeByScreenshot = new List<Anime>();
-        public List<Anime> FillAnimeByJapane = new List<Anime>();
-        public List<Anime> FillAnimeByDisappearance = new List<Anime>();
-        public List<Anime> FillAnimeByDescription = new List<Anime>();
-        public List<Anime> FillAnimeByAnagramm = new List<Anime>();
-        public List<AnimePerson> FillCharacterByImage = new List<AnimePerson>();
+        public void AddUser(string user)
+        {
+            ShikimoriUsers.Add(user);
+        }
 
-        Random rand = new Random(Guid.NewGuid().GetHashCode());
-        public const bool DoDelete = false;
+        public bool HasUser(string user)
+        {
+            return ShikimoriUsers.Contains(user);
+        }
+
+        public int GetUsersCount()
+        {
+            return ShikimoriUsers.Count;
+        }
 
         public void FillLists()
         {
             foreach (string shiki_url in ShikimoriUsers)
             {
-                UserAnime[] userAnimes = Main_Shikimori.GetUserAnimeList(shiki_url, Main_Shikimori.CurrentAnimeStatus);
-                for (int i = 0; i < userAnimes.Length; i++)
+                List<UserAnime> userAnimes = Main_Shikimori.GetUserAnimeList(shiki_url, Main_Shikimori.CurrentAnimeStatus);
+                for (int i = 0; i < userAnimes.Count; i++)
                 {
                     Anime anime = Main_Shikimori.GetAnimeInformation(userAnimes[i]);
                     if (anime != null) anime.UserOwner = shiki_url;
                     Main_Shikimori.GetAnimeScreenshots(anime);
-                    Animes.Add(anime);
+                    FillAnimeByCoub.Add(anime);
 
                     if (anime.AiredOn.HasValue) YearOfAnime.Add(anime);
-                    if (anime.Image != null && anime.Image.Preview != "") FillAnimeByPoster.Add(anime);
+                    if (anime.Image != null && !string.IsNullOrEmpty(anime.Image.Preview)) FillAnimeByPoster.Add(anime);
                     if (anime.Screenshots != null && anime.Screenshots.Length > 0) FillAnimeByScreenshot.Add(anime);
                     if (anime.Japanese != null && anime.Japanese.Length > 0) FillAnimeByJapane.Add(anime);
-                    if (anime.Russian != "") FillAnimeByDisappearance.Add(anime);
-                    if (anime.Description != "") FillAnimeByDescription.Add(anime);
-                    if (anime.Russian != "") FillAnimeByAnagramm.Add(anime);
+                    if (!string.IsNullOrEmpty(anime.Russian)) FillAnimeByDisappearance.Add(anime);
+                    if (!string.IsNullOrEmpty(anime.Description)) FillAnimeByDescription.Add(anime);
+                    if (!string.IsNullOrEmpty(anime.Russian)) FillAnimeByAnagramm.Add(anime);
 
                     AnimePerson[] persons = Main_Shikimori.GetAnimeCharacters(anime.ID);
-
                     for (int j = 0; j < persons.Length; j++)
                     {
                         persons[j].Anime = anime;
                         if (persons[j].Roles.Contains("Main") || (Main_Shikimori.UseSecondaryCharacers && persons[j].Roles.Contains("Supporting")))
                             if (persons[j].Character != null)
-                                if (Persons.Where(p => p.Character.ID == persons[j].Character.ID).Count() == 0)
+                                if (AllPersons.Where(p => p.Character.ID.Equals(persons[j].Character.ID)).Count().Equals(0))
                                 {
-                                    Persons.Add(persons[j]);
-                                    if (persons[j].Character.Image != null && persons[j].Character.Image.Preview != "") FillCharacterByImage.Add(persons[j]);
+                                    AllPersons.Add(persons[j]);
+                                    if (!string.IsNullOrEmpty(persons[j].Character.Japanese) && !string.IsNullOrEmpty(persons[j].Character.Russian)) FillCharacterByJapanese.Add(persons[j]);
+                                    if (!string.IsNullOrEmpty(persons[j].Character.Russian)) FillCharacterByDescription.Add(persons[j]);
+                                    if (!string.IsNullOrEmpty(persons[j].Character.Russian) && persons[j].Character.Image != null && persons[j].Character.Image.Preview != "") FillCharacterByImage.Add(persons[j]);
                                 }
                     }
-                    if (Animes.Where(p => p.ID == anime.ID).Count() == 0)
+
+                    //Заполнение списка опенингов и эндингов
+                    anime.OPs = new List<AnimeMusic>();
+                    anime.EDs = new List<AnimeMusic>();
+
+                    SearchAnimeResponseDto animeMusic = Main_Themes_Moe.GetAnimeMusic(anime.ID);
+                    if (animeMusic != null)
                     {
-                        Animes.Add(anime);
+                        for (int j = 0; j < animeMusic.Themes.Count; j++)
+                        {
+                            if (animeMusic.Themes[j].ThemeType.Contains("OP"))
+                            {
+                                anime.OPs.Add(new AnimeMusic()
+                                {
+                                    URL = animeMusic.Themes[j].mirror.URL
+                                });
+                                FillAnimeByOpening.Add(anime);
+                            }
+                            if (animeMusic.Themes[j].ThemeType.Contains("ED"))
+                            {
+                                anime.EDs.Add(new AnimeMusic()
+                                {
+                                    URL = animeMusic.Themes[j].mirror.URL
+                                });
+                                FillAnimeByEnding.Add(anime);
+                            }
+                        }
                     }
+
+                    //Если нет такого аниме - добавляем его
+                    if (AllAnimes.Where(p => p.ID.Equals(anime.ID)).Count().Equals(0)) AllAnimes.Add(anime);
                 }
             }
         }
 
         public Anime GetRandomAnime()
         {
-            var temp = Animes[rand.Next(0, Animes.Count)];
-            return temp;
+            return AllAnimes.GetRandomElement();
+        }
+
+        public AnimePerson GetRandomPerson()
+        {
+            return AllPersons.GetRandomElement();
         }
 
         public Anime GetYearOfAnime()
         {
-            var temp = YearOfAnime[rand.Next(0, YearOfAnime.Count)];
-            if (DoDelete) YearOfAnime.Remove(temp);
-            return temp;
+            return YearOfAnime.GetRandomElement();
         }
 
         public AnimePerson GetCharacterByJapanese()
         {
-            var temp = Persons[rand.Next(0, Persons.Count)];
-            return temp;
+            return FillCharacterByJapanese.GetRandomElement();
         }
 
         public AnimePerson GetCharacterByImage()
         {
-            var temp = FillCharacterByImage[rand.Next(0, FillCharacterByImage.Count)];
-            if (DoDelete) FillCharacterByImage.Remove(temp);
-            return temp;
+            return FillCharacterByImage.GetRandomElement();
         }
 
         public AnimePerson GetCharacterByDescription()
         {
-            var temp = Persons[rand.Next(0, Persons.Count)];
-            if (DoDelete) Persons.Remove(temp);
-            return temp;
-        }
-
-        public Anime GetAnimeByOst()
-        {
-            var temp = Animes[rand.Next(0, Animes.Count)];
-            return temp;
+            return FillCharacterByDescription.GetRandomElement();
         }
 
         public Anime GetAnimeByPoster()
         {
-            var temp = FillAnimeByPoster[rand.Next(0, FillAnimeByPoster.Count)];
-            if (DoDelete) FillAnimeByPoster.Remove(temp);
-            return temp;
+            return FillAnimeByPoster.GetRandomElement();
         }
 
         public Anime GetAnimeByScreenshot()
         {
-            var temp = FillAnimeByScreenshot[rand.Next(0, FillAnimeByScreenshot.Count)];
-            if (DoDelete) FillAnimeByScreenshot.Remove(temp);
-            return temp;
-        }
-
-        public Anime GetAnimeByOpening()
-        {
-            var temp = Animes[rand.Next(0, Animes.Count)];
-            return temp;
-        }
+            return FillAnimeByScreenshot.GetRandomElement();
+        }    
 
         public Anime GetAnimeByJapane()
         {
-            var temp = FillAnimeByJapane[rand.Next(0, FillAnimeByJapane.Count)];
-            if (DoDelete) FillAnimeByJapane.Remove(temp);
-            return temp;
-        }
-
-        public Anime GetAnimeByEnding()
-        {
-            var temp = Animes[rand.Next(0, Animes.Count)];
-            return temp;
+            return FillAnimeByJapane.GetRandomElement();
         }
 
         public Anime GetAnimeByDisappearance()
         {
-            var temp = FillAnimeByDisappearance[rand.Next(0, FillAnimeByDisappearance.Count)];
-            if (DoDelete) FillAnimeByDisappearance.Remove(temp);
-            return temp;
+            return FillAnimeByDisappearance.GetRandomElement();
         }
 
         public Anime GetAnimeByDescription()
         {
-            var temp = FillAnimeByDescription[rand.Next(0, FillAnimeByDescription.Count)];
-            if (DoDelete) FillAnimeByDescription.Remove(temp);
-            return temp;
+            return FillAnimeByDescription.GetRandomElement();
         }
 
         public Anime GetAnimeByAnagramm()
         {
-            var temp = FillAnimeByAnagramm[rand.Next(0, FillAnimeByAnagramm.Count)];
-            if (DoDelete) FillAnimeByAnagramm.Remove(temp);
-            return temp;
+            return FillAnimeByAnagramm.GetRandomElement();
         }
 
         public Anime GetAnimeByCoub()
         {
-            var temp = Animes[rand.Next(0, Animes.Count)];
-            return temp;
+            return FillAnimeByCoub.GetRandomElement();
+        }
+
+        public Anime GetAnimeByOpening()
+        {
+            return FillAnimeByOpening.GetRandomElement();
+        }
+
+        public Anime GetAnimeByEnding()
+        {
+            return FillAnimeByEnding.GetRandomElement();
+        }
+    }
+
+    public class CategotyList<T>
+    {
+        private readonly List<T> FillList = new List<T>();
+        private readonly List<T> FillList_Backup = new List<T>();
+
+        public void Add(T element)
+        {
+            FillList.Add(element);
+            FillList_Backup.Add(element);
+        }
+
+        public void Remove(T element)
+        {
+            if (FillList.Contains(element)) FillList.Remove(element);
+        }
+
+        public T GetRandomElement()
+        {
+            if (FillList.Count.Equals(0))
+            {
+                if (FillList_Backup.Count.Equals(0)) return default;
+                T[] temp = new T[FillList_Backup.Count];
+                FillList_Backup.CopyTo(temp);
+                FillList.AddRange(temp);
+            }
+
+            T element = FillList.GetRandomElement();
+            Remove(element);
+            return element;
         }
     }
 }

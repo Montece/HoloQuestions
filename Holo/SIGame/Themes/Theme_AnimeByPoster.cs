@@ -15,7 +15,7 @@ namespace Holo.Themes
         {
             Anime anime = shiki.GetAnimeByPoster(); 
 
-            question.MediaUrl = Main_Shikimori.URL_ + anime.Image.Preview;
+            question.MediaUrl = Main_Shikimori.URL + anime.Image.Preview;
             question.MediaPath = Web.GetFilename($"./{filename_}/Images/", ".jpg", out string filename);
             question.MediaFilename = filename;
             question.Answer = $"{anime.Russian}";

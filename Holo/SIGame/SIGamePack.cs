@@ -63,15 +63,15 @@ namespace Holo.SIGame
                 {
                     for (int c = 0; c < Rounds[i].Themes[j].Questions.Count; c++)
                     {
-                        //try
-                        //{
+                        try
+                        {
+                            Output.Print($"Pack #{ID}: Fill r[{i + 1}/{Rounds.Count}] t[{j + 1}/{Rounds[i].Themes.Count}] q[{c + 1}/{Rounds[i].Themes[j].Questions.Count}]");
                             Rounds[i].Themes[j].Questions[c].Theme.FillQuestion(Rounds[i].Themes[j].Questions[c], shiki, FilenameTemp);
-                        Output.Print($"Pack #{ID}: r[{i}/{Rounds.Count - 1}], t[{j}/{Rounds[i].Themes.Count - 1}], q[{c}/{Rounds[i].Themes[j].Questions.Count - 1}]");
-                        //}
-                        //catch
-                        //{
+                        }
+                        catch
+                        {
                            //c--;
-                        //}
+                        }
                     }
                 }
             }
@@ -108,16 +108,17 @@ namespace Holo.SIGame
 
                     for (int c = 0; c < Rounds[i].Themes[j].Questions.Count; c++)
                     {
-                        try
-                        {
+                        /*try
+                        {*/
+                            Output.Print($"Pack #{ID}: Download r[{i + 1}/{Rounds.Count}] t[{j + 1}/{Rounds[i].Themes.Count}] q[{c + 1}/{Rounds[i].Themes[j].Questions.Count}]");
                             Rounds[i].Themes[j].Questions[c].Theme.DownloadContent(Rounds[i].Themes[j].Questions[c]);
                             content += Rounds[i].Themes[j].Questions[c].Theme.GetXML(Rounds[i].Themes[j].Questions[c]);
-                        }
+                        /*}
                         catch
                         {
                             Rounds[i].Themes[j].Questions[c].Theme.FillQuestion(Rounds[i].Themes[j].Questions[c], shiki, FilenameTemp);
                             c--;
-                        }
+                        }*/
                     }
 
                     content += "</questions></theme>";

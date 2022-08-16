@@ -2,6 +2,7 @@
 using Holo.SIGame.Elements;
 using Holo.Websites.Website_Shikimori;
 using Holo.Websites.Website_Shikimori.Structs;
+using Holo.Websites.Website_Themes_Moe;
 using Holo.Websites.Website_Youtube;
 
 namespace Holo.Themes
@@ -11,9 +12,9 @@ namespace Holo.Themes
         public override void FillQuestion(SIG_question question, Shikimori shiki, string filename_)
         {
             Anime anime = shiki.GetAnimeByEnding();
-            var video = Main_Youtube.Search(anime.Name + " ending");
+            AnimeMusic music = anime.EDs.GetRandomElement();
 
-            question.MediaUrl = video.getUrl();
+            question.MediaUrl = music.URL;
             question.MediaPath = Web.GetFilename($"./{filename_}/Audio/", ".mp3", out string filename);
             question.MediaFilename = filename;
             question.Answer = $"{anime.Russian}";
@@ -21,7 +22,7 @@ namespace Holo.Themes
 
         public override void DownloadContent(SIG_question question)
         {
-            Main_Youtube.DownloadAudio(question.MediaUrl, question.MediaPath);
+            Main_Themes_Moe.DownloadAudio(question.MediaUrl, question.MediaPath);
         }
 
         public override string GetXML(SIG_question question)
